@@ -4,15 +4,14 @@ import java.util.List;
 
 public class AgendaDb {
 
+    final String URL = "jdbc:postgresql://localhost:5432/iosif_costin";
+    final String USERNAME = "postgres";
+    final String PASSWORD = "asdfasdf";
 
     public void insert (String nume, String telefon) {
 
         try {
             Class.forName("org.postgresql.Driver");
-
-            final String URL = "jdbc:postgresql://localhost:5432/iosif_costin";
-            final String USERNAME = "postgres";
-            final String PASSWORD = "asdfasdf";
 
             Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 
@@ -35,10 +34,6 @@ public class AgendaDb {
     public List<Persoana> read (){
         List<Persoana> rezultat = new ArrayList<>();
         try {
-            final String URL = "jdbc:postgresql://localhost:5432/iosif_costin";
-            final String USERNAME = "postgres";
-            final String PASSWORD = "asdfasdf";
-
             Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 
             Statement st = conn.createStatement();
@@ -65,11 +60,6 @@ public class AgendaDb {
     public void update (String nume, String telefon,String id){
 
         int id2 = Integer.parseInt(id);
-
-        final String URL = "jdbc:postgresql://localhost:5432/iosif_costin";
-        final String USERNAME = "postgres";
-        final String PASSWORD = "asdfasdf";
-
         try {
             Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 
@@ -85,12 +75,31 @@ public class AgendaDb {
             e.printStackTrace();
         }
     }
+
+    public void delete(String id){
+
+        int id2 = Integer.parseInt(id);
+
+        try {
+            Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
+            PreparedStatement pSt = conn.prepareStatement("DELETE FROM agenda WHERE id=? ");
+            pSt.setLong(1,id2);
+
+            int rowDeleted = pSt.executeUpdate();
+            pSt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
 //        List<Persoana> p = new AgendaDb().read();
 //        for (Persoana persoana : p){
 //            System.out.println(persoana.getNume().trim() + " - " + persoana.getTelefon().trim());
 
 //        new AgendaDb().update("Mariana","07577778777","2");
+//        new AgendaDb().delete("4");
         }
     }
 

@@ -44,6 +44,10 @@ public class Agenda  extends HttpServlet {
         }else if (action != null && action.equals("U")){
 
             agenda.update(nume,telefon,id);
+
+        }else if (action !=null && action.equals("D")){
+
+            agenda.delete(id);
         }
     }
 
