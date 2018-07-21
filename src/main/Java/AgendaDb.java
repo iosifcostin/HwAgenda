@@ -62,11 +62,35 @@ public class AgendaDb {
         return null;
     }
 
-    public static void main(String[] args) {
-        List<Persoana> p = new AgendaDb().read();
-        for (Persoana persoana : p){
-            System.out.println(persoana.getNume().trim() + " - " + persoana.getTelefon().trim());
+    public void update (String nume, String telefon,String id){
+
+        int id2 = Integer.parseInt(id);
+
+        final String URL = "jdbc:postgresql://localhost:5432/iosif_costin";
+        final String USERNAME = "postgres";
+        final String PASSWORD = "asdfasdf";
+
+        try {
+            Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
+            PreparedStatement pSt = conn.prepareStatement("UPDATE agenda SET nume=?, telefon=? WHERE id=?");
+            pSt.setString(1, nume );
+            pSt.setString(2,telefon);
+            pSt.setLong(3,id2);
+            int rowUpdated = pSt.executeUpdate();
+
+            pSt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-}
+    public static void main(String[] args) {
+//        List<Persoana> p = new AgendaDb().read();
+//        for (Persoana persoana : p){
+//            System.out.println(persoana.getNume().trim() + " - " + persoana.getTelefon().trim());
+
+//        new AgendaDb().update("Mariana","07577778777","2");
+        }
+    }
 

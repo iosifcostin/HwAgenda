@@ -18,6 +18,8 @@ public class Agenda  extends HttpServlet {
         String action = req.getParameter("action");
         String nume = req.getParameter("nume");
         String telefon = req.getParameter("telefon");
+        String id = req.getParameter("id");
+
 
         if (action != null && action.equals("C")) {
 
@@ -39,6 +41,9 @@ public class Agenda  extends HttpServlet {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (action != null && action.equals("U")){
+
+            agenda.update(nume,telefon,id);
         }
     }
 
