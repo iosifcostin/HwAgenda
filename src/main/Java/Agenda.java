@@ -20,15 +20,20 @@ public class Agenda  extends HttpServlet {
         String telefon = req.getParameter("telefon");
         String id = req.getParameter("id");
 
+        res.setContentType("text/html;charset=UTF-8");
 
         if (action != null && action.equals("C")) {
 
             agenda.insert(nume, telefon);
-
+            try {
+                PrintWriter out = res.getWriter();
+                out.print("Contact adaugat " + nume + " - "+ telefon );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (action != null && action.equals("R")){
 
             try {
-                res.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = res.getWriter();
 
                 List<Persoana> p = agenda.read();
@@ -44,10 +49,22 @@ public class Agenda  extends HttpServlet {
         }else if (action != null && action.equals("U")){
 
             agenda.update(nume,telefon,id);
+            try {
+                PrintWriter out = res.getWriter();
+                out.print("Contact modificat cu succes !");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }else if (action !=null && action.equals("D")){
 
             agenda.delete(id);
+            try {
+                PrintWriter out = res.getWriter();
+                out.print("Contact sters !");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
